@@ -11,7 +11,7 @@
     "retro-bowl", "slope", "subway-surfers", "ovo", "henry-stickmin-fleeing-the-complex", "run-3", "cookie-clicker",
     "tunnel-rush", "temple-run-2", "fireboy-and-watergirl", "bloons-td-5", "drive-mad", "papas-pizzeria", "moto-x3m",
     "jetpack-joyride", "full-screen-mario", "bitlife", "happy-wheels", "basket-random", "choppy-orc", "stickman-hook",
-    "vex-5", "monkey-mart", "drift-boss", "snow-rider-3d", "learn-to-fly-2", "fruit-ninja", "rooftop-snipers",
+    "vex-5", "monkey-mart", "big-tower-tiny-square", "drift-boss", "snow-rider-3d", "learn-to-fly-2", "learn-to-fly-3", "fruit-ninja", "rooftop-snipers",
     "paper-io-2", "age-of-war", "the-worlds-hardest-game", "super-mario-63", "2048", "celeste-classic", "idle-breakout",
     "gun-mayhem-2", "riddle-school", "duck-life-4", "super-smash-flash", "the-impossible-quiz", "bad-ice-cream",
     "tiny-fishing", "fancy-pants-adventure", "basketball-stars", "qwop", "one-trick-mage", "portal-flash", "bloxorz",
