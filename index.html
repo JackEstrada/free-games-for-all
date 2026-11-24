@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Free Games For All</title>
+<meta name="description" content="74 browser games in one place: platformers, Flash classics, idle games and more. No ads, no sign-ups.">
+<meta name="theme-color" content="#15111f">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <a class="logo" href="#" aria-label="Free Games For All, home">
+      <span class="logo-main">Free Games</span><span class="logo-sub">for all</span>
+    </a>
+    <label class="search" for="q">
+      <span class="sr-only">Search games</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+      <input id="q" type="search" placeholder="Search 74 games" autocomplete="off" spellcheck="false" enterkeyhint="go">
+      <kbd aria-hidden="true">/</kbd>
+    </label>
+    <button class="btn" id="random" type="button" title="Play a random game">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2"/><circle cx="15.5" cy="15.5" r="1.2"/><circle cx="15.5" cy="8.5" r="1.2"/><circle cx="8.5" cy="15.5" r="1.2"/></svg>
+      <span>Random</span>
+    </button>
+    <button class="btn" id="install" type="button" hidden>Install app</button>
+  </div>
+</header>
+
+<main id="lobby" class="lobby">
+  <section class="hero" aria-label="Featured">
+    <article class="feature" id="feature">
+      <a class="feature-art" id="feature-art" href="#" tabindex="-1" aria-hidden="true"><img id="feature-img" alt=""></a>
+      <div class="feature-copy">
+        <p class="eyebrow">Today's pick</p>
+        <h1 id="feature-title">Free Games For All</h1>
+        <p class="feature-by" id="feature-by"></p>
+        <p class="feature-blurb" id="feature-blurb"></p>
+        <div class="feature-actions">
+          <a class="btn btn-primary" id="feature-play" href="#">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5v14l12-7z" fill="currentColor" stroke="none"/></svg>
+            Play now
+          </a>
+          <button class="btn" id="feature-next" type="button">Show another</button>
+        </div>
+      </div>
+    </article>
+    <aside class="side" aria-label="Your games">
+      <dl class="counts">
+        <div><dt>Games</dt><dd id="c-total">0</dd></div>
+        <div><dt>You've played</dt><dd id="c-played">0</dd></div>
+        <div><dt>Hours played</dt><dd id="c-hours">0</dd></div>
+      </dl>
+      <h2>Jump back in</h2>
+      <ul class="recent" id="recent"></ul>
+      <p class="side-empty" id="recent-empty">Games you play show up here, so you can get back to them in one click.</p>
+    </aside>
+  </section>
+
+  <div class="toolbar">
+    <div class="chips" id="chips" role="toolbar" aria-label="Filter by category"></div>
+    <label class="sort" for="sort">Sort
+      <select id="sort">
+        <option value="featured">Featured</option>
+        <option value="az">A to Z</option>
+        <option value="recent">Recently played</option>
+        <option value="most">Most played</option>
+      </select>
+    </label>
+  </div>
+  <p class="result-line" id="result-line" aria-live="polite"></p>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>No games match. Try a shorter search or another category.</p>
+
+  <footer class="foot">
+    <p>Every game belongs to its creator; developer credits are on each game's page. HTML5 games run as single self-contained files, and Flash games run through <a href="https://ruffle.rs" target="_blank" rel="noopener">Ruffle</a>, an open-source Flash emulator hosted on this site. Favorites, play history and game saves stay in this browser. Games you've opened keep working offline.</p>
+    <p class="keys"><span><kbd>/</kbd> search</span><span><kbd>Enter</kbd> play the first result</span><span><kbd>R</kbd> random game</span></p>
+  </footer>
+</main>
+
+<section id="player" class="player" hidden aria-label="Now playing">
+  <div class="pbar">
+    <a class="icon-btn" id="back" href="#" aria-label="Back to all games" title="All games">
+      <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+    </a>
+    <div class="p-titles">
+      <h1 class="p-title" id="p-title"></h1>
+      <p class="p-by" id="p-by"></p>
+    </div>
+    <div class="p-actions">
+      <button class="icon-btn" id="p-fav" type="button" aria-pressed="false" aria-label="Add to favorites" title="Favorite">
+        <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+      </button>
+      <button class="icon-btn" id="p-restart" type="button" aria-label="Restart game" title="Restart">
+        <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v5h5"/></svg>
+      </button>
+      <a class="icon-btn hide-sm" id="p-newtab" href="#" target="_blank" rel="noopener" aria-label="Open in a new tab" title="Open in a new tab">
+        <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+      </a>
+      <button class="icon-btn" id="p-full" type="button" aria-label="Fullscreen" title="Fullscreen">
+        <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="pstage" id="pstage">
+    <div class="frame-box" id="frame-box">
+      <div class="loading" id="loading">
+        <div class="spin" aria-hidden="true"></div>
+        <p id="loading-text">Loading</p>
+        <small id="loading-size"></small>
+      </div>
+    </div>
+  </div>
+  <div class="pinfo">
+    <section>
+      <h2>About</h2>
+      <p id="p-blurb"></p>
+      <div class="facts" id="p-facts"></div>
+    </section>
+    <section>
+      <h2>Controls</h2>
+      <dl class="controls" id="p-controls"></dl>
+    </section>
+    <section class="more">
+      <h2 id="more-title">More like this</h2>
+      <div class="grid" id="more"></div>
+    </section>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="assets/catalog.js"></script>
+<script src="assets/meta.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

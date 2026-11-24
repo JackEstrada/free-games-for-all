@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flash game</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  #stage, ruffle-player { display: block; width: 100%; height: 100%; }
+  #msg {
+    position: fixed; inset: 0; display: grid; place-items: center; padding: 24px;
+    color: #f3eefe; font: 15px/1.5 system-ui, sans-serif; text-align: center;
+  }
+  #msg[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="msg" hidden></div>
+<script>
+  // Ruffle runs Flash content with WebAssembly. Files live in ./ruffle so nothing loads from another site.
+  window.RufflePlayer = window.RufflePlayer || {};
+  window.RufflePlayer.config = {
+    polyfills: false,
+    autoplay: "on",
+    unmuteOverlay: "visible",
+    splashScreen: false,
+    letterbox: "on",
+    contextMenu: "rightClickOnly",
+    showSwfDownload: false,
+    openUrlMode: "deny",          // old sponsor buttons try to open portal sites; block them
+    warnOnUnsupportedContent: false,
+    logLevel: "error",
+    backgroundColor: "#000000",
+  };
+</script>
+<script src="ruffle/ruffle.js"></script>
+<script>
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var swf = params.get("swf") || "";
+    var msg = document.getElementById("msg");
+    function fail(text) { msg.textContent = text; msg.hidden = false; }
+    if (!/^flash\/[a-z0-9-]+\.swf$/.test(swf)) { fail("No game selected."); return; }
+    var player = window.RufflePlayer.newest().createPlayer();
+    document.getElementById("stage").appendChild(player);
+    var opts = { url: swf };
+    var spoof = params.get("spoof");           // some old games only run on the portal they shipped to
+    if (spoof && /^https?:\/\/[\w.-]+\//.test(spoof)) opts.spoofUrl = spoof;
+    player.ruffle().load(opts).then(function () { player.focus(); }).catch(function (e) {
+      fail("This game couldn't start: " + (e && e.message ? e.message : e));
+    });
+    // Keep keyboard focus on the game when the parent page hands focus to this frame.
+    window.addEventListener("focus", function () { player.focus(); });
+    document.addEventListener("pointerdown", function () { player.focus(); });
+  })();
+</script>
+</body>
+</html>
