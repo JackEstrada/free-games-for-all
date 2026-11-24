@@ -1,6 +1,6 @@
 # Free Games For All
 
-One site with 148 browser games: the 21 games from the original Free Games For All Google Sites, 49 popular HTML5 games, and 78 classic Flash games that run through a self-hosted copy of [Ruffle](https://ruffle.rs).
+One site with 146 browser games: the 21 games from the original Free Games For All Google Sites, 49 popular HTML5 games, and 76 classic Flash games that run through a self-hosted copy of [Ruffle](https://ruffle.rs).
 
 ## What's here
 
