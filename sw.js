@@ -3,7 +3,7 @@
  * thumbnails and Ruffle are cache-first, so any game you've opened once keeps working offline.
  * Bump VERSION when you change index.html, assets/ or flash.html.
  */
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL = "fgfa-shell-" + VERSION;
 const GAMES = "fgfa-games";
 const SHELL_FILES = [

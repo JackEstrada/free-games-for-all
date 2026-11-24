@@ -13,10 +13,22 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 catalog = open(os.path.join(ROOT, "assets", "catalog.js"), encoding="utf-8").read()
 games = re.findall(r'\{ id: "([a-z0-9-]+)", title: "[^"]*", type: "(html|flash)"', catalog)
 
+
+def game_size(gid, kind):
+    """Bytes on disk: one .swf, one .html, or a whole games/<id>/ folder."""
+    if kind == "flash":
+        f = os.path.join(ROOT, "flash", gid + ".swf")
+        return os.path.getsize(f) if os.path.exists(f) else 0
+    folder = os.path.join(ROOT, "games", gid)
+    if os.path.isdir(folder):
+        return sum(os.path.getsize(os.path.join(r, f)) for r, _, fs in os.walk(folder) for f in fs)
+    f = os.path.join(ROOT, "games", gid + ".html")
+    return os.path.getsize(f) if os.path.exists(f) else 0
+
+
 meta = {}
 for gid, kind in games:
-    f = os.path.join(ROOT, "flash" if kind == "flash" else "games", gid + (".swf" if kind == "flash" else ".html"))
-    entry = {"size": os.path.getsize(f) if os.path.exists(f) else 0}
+    entry = {"size": game_size(gid, kind)}
     png = os.path.join(ROOT, "thumbs", gid + ".png")
     webp = os.path.join(ROOT, "thumbs", gid + ".webp")
     if os.path.exists(png):

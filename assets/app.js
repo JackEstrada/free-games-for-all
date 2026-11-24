@@ -8,21 +8,23 @@
 
   // Order used by "Featured" sort and for today's pick. Anything not listed follows in catalog order.
   var FEATURED = [
-    "slope", "full-screen-mario", "henry-stickmin-fleeing-the-complex", "cookie-clicker", "choppy-orc",
-    "stickman-hook", "moto-x3m-winter", "paper-io-2", "bloons-td-2", "age-of-war", "duck-life-4",
-    "the-worlds-hardest-game", "super-mario-63", "riddle-school", "idle-breakout", "learn-to-fly",
-    "one-trick-mage", "portal-flash", "super-smash-flash", "the-impossible-quiz", "qwop", "bloxorz",
-    "motherload", "pandemic-2", "just-one-boss", "tag", "sticky-sorcerer", "n", "achievement-unlocked",
-    "interactive-buddy", "stick-rpg", "storm-the-house-2", "unicycle-hero", "greedy-mimic"
+    "retro-bowl", "slope", "subway-surfers", "ovo", "henry-stickmin-fleeing-the-complex", "run-3", "cookie-clicker",
+    "tunnel-rush", "temple-run-2", "fireboy-and-watergirl", "bloons-td-5", "drive-mad", "papas-pizzeria", "moto-x3m",
+    "jetpack-joyride", "full-screen-mario", "bitlife", "happy-wheels", "basket-random", "choppy-orc", "stickman-hook",
+    "vex-5", "monkey-mart", "drift-boss", "snow-rider-3d", "learn-to-fly-2", "fruit-ninja", "rooftop-snipers",
+    "paper-io-2", "age-of-war", "the-worlds-hardest-game", "super-mario-63", "2048", "celeste-classic", "idle-breakout",
+    "gun-mayhem-2", "riddle-school", "duck-life-4", "super-smash-flash", "the-impossible-quiz", "bad-ice-cream",
+    "tiny-fishing", "fancy-pants-adventure", "basketball-stars", "qwop", "one-trick-mage", "portal-flash", "bloxorz",
+    "dino", "little-alchemy", "red-ball-4", "motherload", "pandemic-2", "just-one-boss", "tag"
   ];
   var rank = {};
   GAMES.forEach(function (g, i) { rank[g.id] = 1000 + i; });
   FEATURED.forEach(function (id, i) { if (byId[id]) rank[id] = i; });
   // Games whose cover is a sponsor splash screen don't make a good "Today's pick".
   var NO_PICK = ["pandemic-2", "portal-flash", "mario-kart-flash", "paper-io-2", "duck-life-4"];
-  var PICK_POOL = FEATURED.slice(0, 26).filter(function (id) { return byId[id] && NO_PICK.indexOf(id) === -1; });
+  var PICK_POOL = FEATURED.slice(0, 40).filter(function (id) { return byId[id] && NO_PICK.indexOf(id) === -1; });
 
-  var CATS = ["Platformer", "Action", "Arcade", "Adventure", "Puzzle", "Strategy", "Idle", "Racing", "Sports", "2 Player", "Board", "Sandbox"];
+  var CATS = ["Platformer", "Arcade", "Action", "Adventure", "Puzzle", "Strategy", "Racing", "Sports", "2 Player", "Idle", "Simulation", "Board", "Sandbox"];
 
   // ---------- Per-browser profile ----------
   var KEY = "fgfa:v1";
@@ -44,8 +46,11 @@
 
   // ---------- Helpers ----------
   function $(id) { return document.getElementById(id); }
-  function fileOf(g) { return g.type === "flash" ? "flash/" + g.id + ".swf" : "games/" + g.id + ".html"; }
-  function srcOf(g) { return g.type === "flash" ? "flash.html?swf=flash/" + g.id + ".swf" : "games/" + g.id + ".html"; }
+  function fileOf(g) {
+    if (g.type === "flash") return "flash/" + g.id + ".swf";
+    return g.dir ? "games/" + g.id + "/index.html" : "games/" + g.id + ".html";
+  }
+  function srcOf(g) { return g.type === "flash" ? "flash.html?swf=flash/" + g.id + ".swf" : fileOf(g); }
   function thumbOf(g) { return "thumbs/" + g.id + ".webp"; }
   function fmtSize(b) { return b >= 1e6 ? (b / 1e6).toFixed(1) + " MB" : Math.max(1, Math.round(b / 1e3)) + " KB"; }
   function ago(t) {

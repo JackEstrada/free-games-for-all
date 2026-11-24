@@ -1,6 +1,6 @@
 # Free Games For All
 
-One site with 74 browser games: the 21 games from the original Free Games For All Google Sites, plus 53 classic Flash games that run through a self-hosted copy of [Ruffle](https://ruffle.rs).
+One site with 148 browser games: the 21 games from the original Free Games For All Google Sites, 49 popular HTML5 games, and 78 classic Flash games that run through a self-hosted copy of [Ruffle](https://ruffle.rs).
 
 ## What's here
 
@@ -8,7 +8,7 @@ One site with 74 browser games: the 21 games from the original Free Games For Al
 | --- | --- |
 | `index.html`, `assets/` | The lobby and player: search, categories, favorites, recently played, play time, fullscreen |
 | `assets/catalog.js` | Every game's title, category, controls, credits. Edit this to add or change games |
-| `games/` | HTML5 games, one self-contained `.html` file each (pulled from the old Google Sites embed blocks) |
+| `games/` | HTML5 games: single `.html` files from the old Google Sites, plus one folder per newer game (`games/<id>/index.html`) |
 | `flash/` | Flash games (`.swf`) |
 | `flash.html` | Small page that runs one SWF with Ruffle |
 | `ruffle/` | Ruffle 0.7.1, self-hosted so nothing loads from another site |

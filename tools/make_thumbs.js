@@ -29,15 +29,24 @@ const CLICKS = JSON.parse(process.env.CLICKS || "{}");
     }
     const ctx = await browser.newContext({ viewport: { width: w, height: h } });
     const page = await ctx.newPage();
-    const url = BASE + (g.type === "flash" ? `flash.html?swf=flash/${g.id}.swf` : `games/${g.id}.html`);
+    const url = BASE + (g.type === "flash" ? `flash.html?swf=flash/${g.id}.swf` : g.dir ? `games/${g.id}/index.html` : `games/${g.id}.html`);
     try { await page.goto(url, { waitUntil: "load", timeout: 90000 }); } catch (e) { console.log("load timeout", g.id); }
     await page.waitForTimeout(WAIT[g.id] || +(process.env.WAIT_MS || 10000));
     // Headless Chromium has no GPU, so Ruffle shows a notice that eats the first click.
     if (CLICKS[g.id]) { await page.mouse.click(w - 4, h - 4); await page.waitForTimeout(500); }
     for (const [x, y, pause] of CLICKS[g.id] || []) { await page.mouse.click(x * w, y * h); await page.waitForTimeout(pause || 1500); }
-    await page.screenshot({ path: path.join(ROOT, "thumbs", g.id + ".png") });
-    console.log("thumb", g.id, `${w}x${h}`);
-    await ctx.close();
+    // Hide Ruffle's "hardware acceleration is disabled" notice, which only appears in headless Chromium.
+    await page.evaluate(() => {
+      const m = document.querySelector("ruffle-player")?.shadowRoot?.getElementById("hardware-acceleration-modal");
+      if (m) m.style.display = "none";
+    }).catch(() => {});
+    try {
+      await page.screenshot({ path: path.join(ROOT, "thumbs", g.id + ".png"), timeout: 20000 });
+      console.log("thumb", g.id, `${w}x${h}`);
+    } catch (e) {
+      console.log("FAILED", g.id, e.message.split("\n")[0]); // a game that hangs the page shouldn't stop the rest
+    }
+    await ctx.close().catch(() => {});
   }
   await browser.close();
 })();

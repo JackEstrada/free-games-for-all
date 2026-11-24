@@ -1,7 +1,7 @@
 {
   "name": "Free Games For All",
   "short_name": "Free Games",
-  "description": "74 browser games in one place, including classic Flash games.",
+  "description": "148 browser games in one place, including classic Flash games.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
